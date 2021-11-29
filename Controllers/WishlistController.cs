@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BookCart.Interfaces;
-using BookCart.Models;
+using BackEnd.Interfaces;
+using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookCart.Controllers
+namespace BackEnd.Controllers
 {
     [Route("api/[controller]")]
     public class WishlistController : Controller

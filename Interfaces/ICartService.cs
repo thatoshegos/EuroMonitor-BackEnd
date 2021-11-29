@@ -1,4 +1,4 @@
-﻿namespace BookCart.Interfaces
+﻿namespace BackEnd.Interfaces
 {
     public interface ICartService
     {

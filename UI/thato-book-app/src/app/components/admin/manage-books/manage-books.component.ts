@@ -47,7 +47,7 @@ export class ManageBooksComponent implements OnInit, OnDestroy {
       });
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: any) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

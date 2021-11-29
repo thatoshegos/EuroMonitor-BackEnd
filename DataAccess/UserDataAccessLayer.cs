@@ -1,9 +1,9 @@
-﻿using BookCart.Interfaces;
-using BookCart.Models;
+﻿using BackEnd.Interfaces;
+using BackEnd.Models;
 using System;
 using System.Linq;
 
-namespace BookCart.DataAccess
+namespace BackEnd.DataAccess
 {
     public class UserDataAccessLayer : IUserService
     {
@@ -18,7 +18,7 @@ namespace BookCart.DataAccess
         {
             UserMaster user = new UserMaster();
 
-            var userDetails = _dbContext.UserMaster.FirstOrDefault(
+            var userDetails = _dbContext.UserMasters.FirstOrDefault(
                 u => u.Username == loginCredentials.Username && u.Password == loginCredentials.Password
                 );
 
@@ -44,7 +44,7 @@ namespace BookCart.DataAccess
             try
             {
                 userData.UserTypeId = 2;
-                _dbContext.UserMaster.Add(userData);
+                _dbContext.UserMasters.Add(userData);
                 _dbContext.SaveChanges();
                 return 1;
             }
@@ -56,7 +56,7 @@ namespace BookCart.DataAccess
 
         public bool CheckUserAvailabity(string userName)
         {
-            string user = _dbContext.UserMaster.FirstOrDefault(x => x.Username == userName)?.ToString();
+            string user = _dbContext.UserMasters.FirstOrDefault(x => x.Username == userName)?.ToString();
 
             if (user != null)
             {
@@ -70,7 +70,7 @@ namespace BookCart.DataAccess
 
         public bool isUserExists(int userId)
         {
-            string user = _dbContext.UserMaster.FirstOrDefault(x => x.UserId == userId)?.ToString();
+            string user = _dbContext.UserMasters.FirstOrDefault(x => x.UserId == userId)?.ToString();
 
             if (user != null)
             {

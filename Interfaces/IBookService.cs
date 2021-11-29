@@ -1,8 +1,8 @@
-﻿using BookCart.Dto;
-using BookCart.Models;
+﻿using BackEnd.Dto;
+using BackEnd.Models;
 using System.Collections.Generic;
 
-namespace BookCart.Interfaces
+namespace BackEnd.Interfaces
 {
     public interface IBookService
     {
@@ -11,7 +11,7 @@ namespace BookCart.Interfaces
         int UpdateBook(Book book);
         Book GetBookData(int bookId);
         string DeleteBook(int bookId);
-        List<Categories> GetCategories();
+        List<Category> GetCategories();
         List<Book> GetSimilarBooks(int bookId);
         List<CartItemDto> GetBooksAvailableInCart(string cartId);
         List<Book> GetBooksAvailableInWishlist(string wishlistID);

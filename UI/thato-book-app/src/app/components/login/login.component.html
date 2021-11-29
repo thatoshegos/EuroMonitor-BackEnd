@@ -18,7 +18,7 @@
                     <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Username" formControlName="username" required>
-                            <mat-error *ngIf="username.touched && username.invalid">Username is required</mat-error>
+                            <mat-error *ngIf="username && username.invalid">Username is required</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="full-width">
@@ -26,9 +26,9 @@
                                 [type]="showPassword ? 'password' : 'text'" required>
                             <mat-icon matSuffix (click)="showPassword = !showPassword">{{showPassword ? 'visibility_off' :
                   'visibility'}}</mat-icon>
-                            <mat-error *ngIf="password.touched && password.invalid">Password is required</mat-error>
+                            <mat-error *ngIf="password && password.invalid">Password is required</mat-error>
                         </mat-form-field>
-                        <mat-card-actions align="right">
+                        <mat-card-actions align="end">
                             <div fxFlex></div>
                             <button mat-raised-button color="primary">Login</button>
                         </mat-card-actions>

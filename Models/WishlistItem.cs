@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace BackEnd.Models
 {
-    public partial class WishlistItems
+    public partial class WishlistItem
     {
         public int WishlistItemId { get; set; }
         public string WishlistId { get; set; }

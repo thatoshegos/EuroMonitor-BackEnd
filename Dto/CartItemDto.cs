@@ -1,6 +1,6 @@
-﻿using BookCart.Models;
+﻿using BackEnd.Models;
 
-namespace BookCart.Dto
+namespace BackEnd.Dto
 {
     public class CartItemDto
     {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace BackEnd.Models
 {
-    public partial class CustomerOrderDetails
+    public partial class CustomerOrderDetail
     {
         public int OrderDetailsId { get; set; }
         public string OrderId { get; set; }

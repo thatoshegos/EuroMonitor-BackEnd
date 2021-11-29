@@ -1,8 +1,8 @@
-﻿using BookCart.Interfaces;
-using BookCart.Models;
+﻿using BackEnd.Models;
+using BackEnd.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookCart.Controllers
+namespace BackEnd.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookCart.Models
+namespace BackEnd.Models
 {
     public partial class CustomerOrders
     {

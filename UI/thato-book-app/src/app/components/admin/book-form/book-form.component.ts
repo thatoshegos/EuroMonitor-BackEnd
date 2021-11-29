@@ -21,6 +21,7 @@ export class BookFormComponent implements OnInit, OnDestroy {
   bookId: number;
   files: any;
   categoryList: any[];
+  result: Book;
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -79,7 +80,7 @@ export class BookFormComponent implements OnInit, OnDestroy {
     this.bookService.getBookById(this.bookId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        (result: Book) => {
+        result => {
           this.setBookFormData(result);
         }, error => {
           console.log('Error ocurred while fetching book data : ', error);

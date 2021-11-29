@@ -1,12 +1,12 @@
-﻿using BookCart.Dto;
-using BookCart.Interfaces;
-using BookCart.Models;
+﻿using BackEnd.Dto;
+using BackEnd.Interfaces;
+using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookCart.DataAccess
+namespace BackEnd.DataAccess
 {
     public class BookDataAccessLayer : IBookService
     {
@@ -21,7 +21,7 @@ namespace BookCart.DataAccess
         {
             try
             {
-                return _dbContext.Book.AsNoTracking().ToList();
+                return _dbContext.Books.AsNoTracking().ToList();
             }
             catch
             {
@@ -33,7 +33,7 @@ namespace BookCart.DataAccess
         {
             try
             {
-                _dbContext.Book.Add(book);
+                _dbContext.Books.Add(book);
                 _dbContext.SaveChanges();
 
                 return 1;
@@ -73,7 +73,7 @@ namespace BookCart.DataAccess
         {
             try
             {
-                Book book = _dbContext.Book.FirstOrDefault(x => x.BookId == bookId);
+                Book book = _dbContext.Books.FirstOrDefault(x => x.BookId == bookId);
                 if (book != null)
                 {
                     _dbContext.Entry(book).State = EntityState.Detached;
@@ -91,8 +91,8 @@ namespace BookCart.DataAccess
         {
             try
             {
-                Book book = _dbContext.Book.Find(bookId);
-                _dbContext.Book.Remove(book);
+                Book book = _dbContext.Books.Find(bookId);
+                _dbContext.Books.Remove(book);
                 _dbContext.SaveChanges();
 
                 return (book.CoverFileName);
@@ -103,9 +103,9 @@ namespace BookCart.DataAccess
             }
         }
 
-        public List<Categories> GetCategories()
+        public List<Category> GetCategories()
         {
-            List<Categories> lstCategories = new List<Categories>();
+            var lstCategories = new List<Category>();
             lstCategories = (from CategoriesList in _dbContext.Categories select CategoriesList).ToList();
 
             return lstCategories;
@@ -116,7 +116,7 @@ namespace BookCart.DataAccess
             List<Book> lstBook = new List<Book>();
             Book book = GetBookData(bookId);
 
-            lstBook = _dbContext.Book.Where(x => x.Category == book.Category && x.BookId != book.BookId)
+            lstBook = _dbContext.Books.Where(x => x.Category == book.Category && x.BookId != book.BookId)
                 .OrderBy(u => Guid.NewGuid())
                 .Take(5)
                 .ToList();
@@ -127,10 +127,10 @@ namespace BookCart.DataAccess
         {
             try
             {
-                List<CartItemDto> cartItemList = new List<CartItemDto>();
-                List<CartItems> cartItems = _dbContext.CartItems.Where(x => x.CartId == cartID).ToList();
+                var cartItemList = new List<CartItemDto>();
+                var cartItems = _dbContext.CartItems.Where(x => x.CartId == cartID).ToList();
 
-                foreach (CartItems item in cartItems)
+                foreach (var item in cartItems)
                 {
                     Book book = GetBookData(item.ProductId);
                     CartItemDto objCartItem = new CartItemDto
@@ -153,10 +153,10 @@ namespace BookCart.DataAccess
         {
             try
             {
-                List<Book> wishlist = new List<Book>();
-                List<WishlistItems> cartItems = _dbContext.WishlistItems.Where(x => x.WishlistId == wishlistID).ToList();
+                var wishlist = new List<Book>();
+                var cartItems = _dbContext.WishlistItems.Where(x => x.WishlistId == wishlistID).ToList();
 
-                foreach (WishlistItems item in cartItems)
+                foreach (var item in cartItems)
                 {
                     Book book = GetBookData(item.ProductId);
                     wishlist.Add(book);

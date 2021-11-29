@@ -1,6 +1,6 @@
-﻿using BookCart.Models;
+﻿using BackEnd.Models;
 
-namespace BookCart.Interfaces
+namespace BackEnd.Interfaces
 {
     public interface IUserService
     {

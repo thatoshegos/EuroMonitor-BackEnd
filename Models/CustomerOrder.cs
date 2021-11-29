@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 namespace BackEnd.Models
 {
-    public partial class Cart
+    public partial class CustomerOrder
     {
-        public string CartId { get; set; }
+        public string OrderId { get; set; }
         public int UserId { get; set; }
         public DateTime DateCreated { get; set; }
+        public decimal CartTotal { get; set; }
     }
 }

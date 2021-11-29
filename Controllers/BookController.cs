@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using BookCart.Interfaces;
-using BookCart.Models;
+using BackEnd.Models;
+using BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -66,7 +66,7 @@ namespace BookCart.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetCategoriesList")]
-        public async Task<IEnumerable<Categories>> CategoryDetails()
+        public async Task<IEnumerable<Category>> CategoryDetails()
         {
             return await Task.FromResult(_bookService.GetCategories()).ConfigureAwait(true) ;
         }

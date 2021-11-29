@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace BookCart.Models
+namespace BackEnd.Models
 {
     public static class Policies
     {

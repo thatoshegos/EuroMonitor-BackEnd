@@ -1,10 +1,10 @@
-﻿using BookCart.Interfaces;
-using BookCart.Models;
+﻿using BackEnd.Interfaces;
+using BackEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookCart.DataAccess
+namespace BackEnd.DataAccess
 {
     public class WishlistDataAccessLayer : IWishlistService
     {
@@ -18,7 +18,7 @@ namespace BookCart.DataAccess
         public void ToggleWishlistItem(int userId, int bookId)
         {
             string wishlistId = GetWishlistId(userId);
-            WishlistItems existingWishlistItem = _dbContext.WishlistItems.FirstOrDefault(x => x.ProductId == bookId && x.WishlistId == wishlistId);
+            var existingWishlistItem = _dbContext.WishlistItems.FirstOrDefault(x => x.ProductId == bookId && x.WishlistId == wishlistId);
 
             if (existingWishlistItem != null)
             {
@@ -27,7 +27,7 @@ namespace BookCart.DataAccess
             }
             else
             {
-                WishlistItems wishlistItem = new WishlistItems
+                var wishlistItem = new WishlistItem
                 {
                     WishlistId = wishlistId,
                     ProductId = bookId,
@@ -42,11 +42,11 @@ namespace BookCart.DataAccess
             try
             {
                 string wishlistId = GetWishlistId(userId);
-                List<WishlistItems> wishlistItem = _dbContext.WishlistItems.Where(x => x.WishlistId == wishlistId).ToList();
+                var wishlistItem = _dbContext.WishlistItems.Where(x => x.WishlistId == wishlistId).ToList();
 
                 if (!string.IsNullOrEmpty(wishlistId))
                 {
-                    foreach (WishlistItems item in wishlistItem)
+                    foreach (var item in wishlistItem)
                     {
                         _dbContext.WishlistItems.Remove(item);
                         _dbContext.SaveChanges();
@@ -64,7 +64,7 @@ namespace BookCart.DataAccess
         {
             try
             {
-                Wishlist wishlist = _dbContext.Wishlist.FirstOrDefault(x => x.UserId == userId);
+                var wishlist = _dbContext.Wishlists.FirstOrDefault(x => x.UserId == userId);
 
                 if (wishlist != null)
                 {
@@ -93,7 +93,7 @@ namespace BookCart.DataAccess
                     DateCreated = DateTime.Now.Date
                 };
 
-                _dbContext.Wishlist.Add(wishList);
+                _dbContext.Wishlists.Add(wishList);
                 _dbContext.SaveChanges();
 
                 return wishList.WishlistId;

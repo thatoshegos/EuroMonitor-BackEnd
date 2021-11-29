@@ -16,12 +16,12 @@ export class BookCardComponent implements OnInit {
   book: Book;
 
   isActive = false;
-  userData$: Observable<User>;
+  userData: Observable<User>;
 
   constructor(private router: Router, private subscriptionService: SubscriptionService) { }
 
   ngOnInit() {
-    this.userData$ = this.subscriptionService.userData;
+    this.userData = this.subscriptionService.userData;
   }
 
   goToPage(id: number) {

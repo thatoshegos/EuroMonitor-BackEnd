@@ -15,34 +15,34 @@
                     <form [formGroup]="checkOutForm" (ngSubmit)="placeOrder()">
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Name" formControlName="name" required>
-                            <mat-error *ngIf="name.touched && name.invalid">Name is required</mat-error>
+                            <mat-error *ngIf="name && name.invalid">Name is required</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Address Line 1" formControlName="addressLine1" required>
-                            <mat-error *ngIf="addressLine1.touched && addressLine1.invalid">Address is required
+                            <mat-error *ngIf="addressLine1 && addressLine1.invalid">Address is required
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Address Line 2" formControlName="addressLine2" required>
-                            <mat-error *ngIf="addressLine2.touched && addressLine2.invalid">Address is required
+                            <mat-error *ngIf="addressLine2 && addressLine2.invalid">Address is required
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Pincode" formControlName="pincode" required>
-                            <mat-error *ngIf="pincode.touched && pincode.hasError('required')">Pincode is required
+                            <mat-error *ngIf="pincode && pincode.hasError('required')">Pincode is required
                             </mat-error>
-                            <mat-error *ngIf="pincode.touched && pincode.hasError('pattern')">
+                            <mat-error *ngIf="pincode && pincode.hasError('pattern')">
                                 Pincode must have 6 digits only and cannot start with 0
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="full-width">
                             <input matInput placeholder="State" formControlName="state" required>
-                            <mat-error *ngIf="state.touched && state.invalid">State is required</mat-error>
+                            <mat-error *ngIf="state &&state.invalid">State is required</mat-error>
                         </mat-form-field>
-                        <mat-card-actions align="right">
+                        <mat-card-actions align="end">
                             <div fxFlex></div>
                             <button type="submit" mat-raised-button color="primary">Place Order</button>
                             <button type="button" mat-raised-button color="warn"
@@ -82,8 +82,8 @@
                         <tr *ngFor="let item of checkOutItems.orderDetails">
                             <td><a [routerLink]="['/books/details/',item.book.bookId]">{{item.book.title}}</a></td>
                             <td>{{item.quantity}}</td>
-                            <td>{{item.book.price| currency : 'INR'}}</td>
-                            <td>{{ item.book.price * item.quantity | currency : 'INR'}}</td>
+                            <td>{{item.book.price| currency : 'ZAR'}}</td>
+                            <td>{{ item.book.price * item.quantity | currency : 'ZAR'}}</td>
                         </tr>
                     </table>
                     <tfoot class="table">
@@ -91,7 +91,7 @@
                             <th></th>
                             <th></th>
                             <td>Grand Total</td>
-                            <th>{{totalPrice| currency : 'INR' }}</th>
+                            <th>{{totalPrice| currency : 'ZAR' }}</th>
                         </tr>
                     </tfoot>
                 </mat-card-content>

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace BackEnd.Models
 {
-    public partial class CartItems
+    public partial class CartItem
     {
         public int CartItemId { get; set; }
         public string CartId { get; set; }

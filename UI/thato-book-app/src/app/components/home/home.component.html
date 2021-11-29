@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="col mb-3">
-    <div *ngIf="books?.length > 0; else nodata" class="d-flex justify-content-start card-deck-container mb-4">
+    <div *ngIf="books.length > 0; else nodata" class="d-flex justify-content-start card-deck-container mb-4">
       <div *ngFor="let book of books" class="p-1">
         <app-book-card [book]="book"></app-book-card>
       </div>

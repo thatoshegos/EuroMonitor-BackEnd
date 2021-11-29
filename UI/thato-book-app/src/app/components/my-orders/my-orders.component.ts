@@ -36,6 +36,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   private unsubscribe$ = new Subject<void>();
   data:any;
+  result: Order[];
 
   constructor(private orderService: MyordersService) {
     this.userId = localStorage.getItem('userId');
@@ -49,7 +50,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
   getMyOrderDetails() {
     this.orderService.myOrderDetails(this.userId)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((result: Order[]) => {
+      .subscribe(result => {
         if (result != null) {
           this.dataSource.data = Object.values(result);
           this.isLoading = false;
@@ -59,7 +60,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
       });
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: any) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

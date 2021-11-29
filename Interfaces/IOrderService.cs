@@ -1,7 +1,7 @@
-﻿using BookCart.Dto;
+﻿using BackEnd.Dto;
 using System.Collections.Generic;
 
-namespace BookCart.Interfaces
+namespace BackEnd.Interfaces
 {
     public interface IOrderService
     {

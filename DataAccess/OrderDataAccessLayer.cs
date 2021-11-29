@@ -1,12 +1,12 @@
-﻿using BookCart.Dto;
-using BookCart.Interfaces;
-using BookCart.Models;
+﻿using BackEnd.Dto;
+using BackEnd.Interfaces;
+using BackEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BookCart.DataAccess
+namespace BackEnd.DataAccess
 {
     public class OrderDataAccessLayer : IOrderService
     {
@@ -24,7 +24,7 @@ namespace BookCart.DataAccess
                 orderid.Append('-');
                 orderid.Append(CreateRandomNumber(6));
 
-                CustomerOrders customerOrder = new CustomerOrders
+                CustomerOrder customerOrder = new CustomerOrder
                 {
                     OrderId = orderid.ToString(),
                     UserId = userId,
@@ -36,7 +36,7 @@ namespace BookCart.DataAccess
 
                 foreach (CartItemDto order in orderDetails.OrderDetails)
                 {
-                    CustomerOrderDetails productDetails = new CustomerOrderDetails
+                    CustomerOrderDetail productDetails = new CustomerOrderDetail
                     {
                         OrderId = orderid.ToString(),
                         ProductId = order.Book.BookId,
@@ -70,18 +70,18 @@ namespace BookCart.DataAccess
                     OrderDate = _dbContext.CustomerOrders.FirstOrDefault(x => x.OrderId == orderid).DateCreated
                 };
 
-                List<CustomerOrderDetails> orderDetail = _dbContext.CustomerOrderDetails.Where(x => x.OrderId == orderid).ToList();
+                List<CustomerOrderDetail> orderDetail = _dbContext.CustomerOrderDetails.Where(x => x.OrderId == orderid).ToList();
 
                 order.OrderDetails = new List<CartItemDto>();
 
-                foreach (CustomerOrderDetails customerOrder in orderDetail)
+                foreach (CustomerOrderDetail customerOrder in orderDetail)
                 {
                     CartItemDto item = new CartItemDto();
 
                     Book book = new Book
                     {
                         BookId = customerOrder.ProductId,
-                        Title = _dbContext.Book.FirstOrDefault(x => x.BookId == customerOrder.ProductId && customerOrder.OrderId == orderid).Title,
+                        Title = _dbContext.Books.FirstOrDefault(x => x.BookId == customerOrder.ProductId && customerOrder.OrderId == orderid).Title,
                         Price = _dbContext.CustomerOrderDetails.FirstOrDefault(x => x.ProductId == customerOrder.ProductId && customerOrder.OrderId == orderid).Price
                     };
 

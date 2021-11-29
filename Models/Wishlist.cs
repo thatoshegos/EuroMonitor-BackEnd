@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookCart.Models
+#nullable disable
+
+namespace BackEnd.Models
 {
     public partial class Wishlist
     {

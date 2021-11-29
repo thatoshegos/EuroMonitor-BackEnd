@@ -18,7 +18,7 @@ export class BookDetailsComponent implements OnInit {
   BookDetails$: Observable<Book>;
   userData$: Observable<User>;
   data:any;
-
+  book: Book;
   constructor(
     private bookService: BookService,
     private route: ActivatedRoute,
@@ -38,9 +38,5 @@ export class BookDetailsComponent implements OnInit {
 
   getBookDetails() {
     this.BookDetails$ = this.bookService.getBookById(this.bookId)
-    .pipe(catchError(error => {
-      console.log('Error ocurred while fetching book data : ', error);
-      return EMPTY;
-    }));
   }
 }

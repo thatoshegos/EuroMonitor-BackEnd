@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
     this.filterBookData();
   }
 
-  searchStore(event) {
+  searchStore(event:any) {
     const searchItem = this.searchControl.value;
     if (searchItem !== '') {
       this.router.navigate(['/search'], {

@@ -20,9 +20,9 @@ export class CartService {
   }
 
   getCartItems(userId: number) {
-    return this.http.get(this.baseURL + userId)
+    return this.http.get<ShoppingCart>(this.baseURL + userId)
       .pipe(
-        map((response: ShoppingCart[]) => {
+        map((response: any) => {
         this.cartItemCount = response.length;
         return response;
       }));

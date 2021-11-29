@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace BookCart.Models
+#nullable disable
+
+namespace BackEnd.Models
 {
     public partial class BookDBContext : DbContext
     {
@@ -13,28 +17,38 @@ namespace BookCart.Models
         {
         }
 
-        public virtual DbSet<Book> Book { get; set; }
-        public virtual DbSet<Cart> Cart { get; set; }
-        public virtual DbSet<CartItems> CartItems { get; set; }
-        public virtual DbSet<Categories> Categories { get; set; }
-        public virtual DbSet<CustomerOrderDetails> CustomerOrderDetails { get; set; }
-        public virtual DbSet<CustomerOrders> CustomerOrders { get; set; }
-        public virtual DbSet<UserMaster> UserMaster { get; set; }
-        public virtual DbSet<UserType> UserType { get; set; }
-        public virtual DbSet<Wishlist> Wishlist { get; set; }
-        public virtual DbSet<WishlistItems> WishlistItems { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartItem> CartItems { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CustomerOrder> CustomerOrders { get; set; }
+        public virtual DbSet<CustomerOrderDetail> CustomerOrderDetails { get; set; }
+        public virtual DbSet<UserMaster> UserMasters { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<Wishlist> Wishlists { get; set; }
+        public virtual DbSet<WishlistItem> WishlistItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-B281E2N\\MSSQLSERVER1;Database=BookDB;Trusted_Connection=True;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<Book>(entity =>
             {
+                entity.ToTable("Book");
+
                 entity.Property(e => e.BookId).HasColumnName("BookID");
 
                 entity.Property(e => e.Author)
+                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
@@ -50,12 +64,15 @@ namespace BookCart.Models
                 entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.Title)
+                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<Cart>(entity =>
             {
+                entity.ToTable("Cart");
+
                 entity.Property(e => e.CartId)
                     .HasMaxLength(36)
                     .IsUnicode(false);
@@ -65,22 +82,16 @@ namespace BookCart.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
-            modelBuilder.Entity<CartItems>(entity =>
+            modelBuilder.Entity<CartItem>(entity =>
             {
-                entity.HasKey(e => e.CartItemId)
-                    .HasName("PK__CartItem__488B0B0AA0297D1C");
-
                 entity.Property(e => e.CartId)
                     .IsRequired()
                     .HasMaxLength(36)
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Categories>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasKey(e => e.CategoryId)
-                    .HasName("PK__Categori__19093A2B46B8DFC9");
-
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
                 entity.Property(e => e.CategoryName)
@@ -89,23 +100,10 @@ namespace BookCart.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<CustomerOrderDetails>(entity =>
-            {
-                entity.HasKey(e => e.OrderDetailsId)
-                    .HasName("PK__Customer__9DD74DBD81D9221B");
-
-                entity.Property(e => e.OrderId)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
-            });
-
-            modelBuilder.Entity<CustomerOrders>(entity =>
+            modelBuilder.Entity<CustomerOrder>(entity =>
             {
                 entity.HasKey(e => e.OrderId)
-                    .HasName("PK__Customer__C3905BCF96C8F1E7");
+                    .HasName("PK__Customer__C3905BCFC3AB6347");
 
                 entity.Property(e => e.OrderId)
                     .HasMaxLength(20)
@@ -118,10 +116,25 @@ namespace BookCart.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
+            modelBuilder.Entity<CustomerOrderDetail>(entity =>
+            {
+                entity.HasKey(e => e.OrderDetailsId)
+                    .HasName("PK__Customer__9DD74DBD7AF4DAE1");
+
+                entity.Property(e => e.OrderId)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+            });
+
             modelBuilder.Entity<UserMaster>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__UserMast__1788CCAC2694A2ED");
+                    .HasName("PK__UserMast__1788CCACE873D956");
+
+                entity.ToTable("UserMaster");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -155,6 +168,8 @@ namespace BookCart.Models
 
             modelBuilder.Entity<UserType>(entity =>
             {
+                entity.ToTable("UserType");
+
                 entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
 
                 entity.Property(e => e.UserTypeName)
@@ -165,6 +180,8 @@ namespace BookCart.Models
 
             modelBuilder.Entity<Wishlist>(entity =>
             {
+                entity.ToTable("Wishlist");
+
                 entity.Property(e => e.WishlistId)
                     .HasMaxLength(36)
                     .IsUnicode(false);
@@ -174,11 +191,8 @@ namespace BookCart.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
-            modelBuilder.Entity<WishlistItems>(entity =>
+            modelBuilder.Entity<WishlistItem>(entity =>
             {
-                entity.HasKey(e => e.WishlistItemId)
-                    .HasName("PK__Wishlist__171E21A16A5148A4");
-
                 entity.Property(e => e.WishlistId)
                     .IsRequired()
                     .HasMaxLength(36)
